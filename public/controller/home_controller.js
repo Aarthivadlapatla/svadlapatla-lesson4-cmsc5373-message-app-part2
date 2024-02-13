@@ -1,3 +1,8 @@
+import { Thread } from "../model/Thread.js";
+import { currentUser } from "./firebase_auth.js";
+import { addThread } from "./firestore_controller.js";
+//import { DEV } from "../constants.js";
+
 export function onClickCreateButton(e){
     showTextArea();
 }
@@ -18,14 +23,27 @@ function hideTextArea(){
     divTextArea.classList.replace('d-block', 'd-none');
 }
 
-export function onSubmitCreateMessage(e){
+export async function onSubmitCreateMessage(e){
     e.preventDefault();
     if(e.submitter.value == 'cancel'){
         hideTextArea();
         return;
     }
-
     // 'save'
     const title = e.target.title.value;
     const content = e.target.content.value;
+    const uid = currentUser.uid;
+    const email = currentUser.email;
+    const timestamp = Date.now();
+    const thread = new Thread({
+        uid, email, title, content, timestamp,
+    });
+
+    try {
+        await addThread(thread);
+    } catch (e) {
+        //if (DEV) console.log('addThread error', e);
+        console.log('addThread error', e);
+        alert('Failed to create message: ' + JSON.stringify(e));
+    }
 }
