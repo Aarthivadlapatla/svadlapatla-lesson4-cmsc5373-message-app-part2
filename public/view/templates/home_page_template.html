@@ -1,12 +1,24 @@
-<h1>Computer Square</h1>
-<form >
-    <div class="form-group">
-        <label for="number">Enter a number: </label>
-        <input type="number" name="number" id="number"
-        required min="1" max="100" class="form-control"
-        placeholder="Enter a number 1 ~ 100">
-    </div>
-    <button type="submit" class="btn btn-outline-primary">Submit</button>
-</form>
+<div class="create-modal d-block d-grid justify-content-end">
+    <button id="create-button" class="btn btn-outline-danger">Create Message</button>
+</div>
 
-<ul id="display" class="bg-success bg-opacity-25"></ul> 
+<div class="create-modal d-none">
+    <form style="width: 600px;">
+        <input type="text" name="title" class="form-control" placeholder="Title" required minlength="2">
+        <textarea name="content" placeholder="Create a new message"
+            required minlength="10" style="height: 100px;"
+        ></textarea>
+        <button type="submit" value="save" class="btn btn-outline-primary">Save</button>
+        <button type="submit" value="cancel" class="btn btn-outline-secondary">Cancel</button>
+    </form>
+</div>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <th scope="col">action</th>
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+        <th scope="col">Posted At</th>
+    </thead>
+    <tbody></tbody>
+</table>
