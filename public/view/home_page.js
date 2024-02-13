@@ -1,7 +1,7 @@
 import { root } from "./elements.js";
 import { currentUser } from "../controller/firebase_auth.js";
 import { protectedView } from "./protected_view.js";
-import { onClickCreateButton } from "../controller/home_controller.js";
+import { onClickCreateButton, onSubmitCreateMessage } from "../controller/home_controller.js";
 
 export async function homePageView(){
     if(!currentUser){
@@ -16,6 +16,9 @@ export async function homePageView(){
 
     const createButton = divWrapper.querySelector('#create-button');
     createButton.onclick = onClickCreateButton;
+
+    const form = divWrapper.querySelector('form');
+    form.onsubmit = onSubmitCreateMessage;
 
     root.innerHTML = '';
     root.appendChild(divWrapper);
