@@ -1,4 +1,5 @@
 import { Thread } from "../model/Thread.js";
+import { prependThread } from "../view/home_page.js";
 import { currentUser } from "./firebase_auth.js";
 import { addThread } from "./firestore_controller.js";
 //import { DEV } from "../constants.js";
@@ -40,7 +41,8 @@ export async function onSubmitCreateMessage(e){
     });
 
     try {
-        await addThread(thread);
+        const docId = await addThread(thread);
+        prependThread(thread);
     } catch (e) {
         //if (DEV) console.log('addThread error', e);
         console.log('addThread error', e);
