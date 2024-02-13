@@ -43,6 +43,8 @@ export async function onSubmitCreateMessage(e){
     try {
         const docId = await addThread(thread);
         prependThread(thread);
+        hideTextArea();
+        e.target.reset();
     } catch (e) {
         //if (DEV) console.log('addThread error', e);
         console.log('addThread error', e);
