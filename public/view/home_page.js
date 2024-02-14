@@ -1,20 +1,25 @@
 import { root } from "./elements.js";
 import { currentUser } from "../controller/firebase_auth.js";
 import { protectedView } from "./protected_view.js";
-import { onClickCreateButton, onSubmitCreateMessage } from "../controller/home_controller.js";
+import { onClickCreateButton, onSubmitCreateMessage,onClickViewButton } from "../controller/home_controller.js";
 import { getThreadList } from "../controller/firestore_controller.js";
+import { DEV } from "../model/constants.js";
+import { progressMessage } from "./progress_view.js";
 
 export async function homePageView() {
     if (!currentUser) {
         root.innerHTML = await protectedView();
         return;
     }
+
+    root.innerHTML = progressMessage('Loading ...');
+
     let threadList;
     try {
         threadList = await getThreadList();
     } catch (e) {
-        //if(DEV) console.log('getThreadList error', e);
-        console.log('getThreadList error', e);
+        if(DEV) console.log('getThreadList error', e);
+        //console.log('getThreadList error', e);
         alert('Failed to get threads: ' + JSON.stringify(e));
     }
 
@@ -46,7 +51,10 @@ export function prependThread(thread) {
 
 export function createMessageRow(thread) {
     const tdAction = document.createElement('td');
-    tdAction.innerHTML = `view`;
+    tdAction.innerHTML = `
+    <button id="${thread.docId}" class="btn btn-outline-primary">View</button>
+    `;
+    tdAction.querySelector('button').onclick = onClickViewButton;
     const tdTitle = document.createElement('td');
     tdTitle.textContent = thread.title;
     const tdEmail = document.createElement('td');
