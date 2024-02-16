@@ -4,12 +4,13 @@ import {
     addDoc,
     orderBy,
     getDocs,
+    getDoc,
     query,
+    doc,
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"
 import { app } from "./firebase_core.js";
 import { CollectionName } from "../model/constants.js";
 import { Thread } from "../model/Thread.js";
-
 
 const db = getFirestore(app);
 
@@ -30,4 +31,15 @@ export async function getThreadList() {
         threadList.push(t);
     });
     return threadList;
+}
+
+export async function getThreadById(threadId) {
+    const docRef = doc(db, CollectionName.threads, threadId);
+    const docSnap = await getDoc(docRef);
+    if(!docSnap.exists()) {
+        return null;
+    }
+    const t = new Thread(docSnap.data());
+    t.set_docId(threadId);
+    return t;
 }
