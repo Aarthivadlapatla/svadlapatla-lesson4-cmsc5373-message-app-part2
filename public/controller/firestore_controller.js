@@ -12,6 +12,7 @@ import {
 import { app } from "./firebase_core.js";
 import { CollectionName } from "../model/constants.js";
 import { Thread } from "../model/Thread.js";
+import { Reply } from "../model/Reply.js";
 
 
 const db = getFirestore(app);
