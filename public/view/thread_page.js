@@ -55,6 +55,11 @@ export async function threadPageView(threadId){
     root.appendChild(divWrapper);
 }
 
+export function renderReply(reply){
+    const tr = createReplyView(reply);
+    document.querySelector('tbody').appendChild(tr);
+}
+
 function createReplyView(reply){
     const tr = document.createElement('tr');
     tr.classList.add('mt-3', 'pt-3');

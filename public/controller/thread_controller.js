@@ -2,6 +2,7 @@ import { Reply } from "../model/Reply.js";
 import { currentUser } from "./firebase_auth.js";
 import { addReply } from "./firestore_controller.js";
 import { DEV } from "../model/constants.js";
+import { renderReply } from "../view/thread_page.js";
 
 export async function onSubmitAddReply(e){
     e.preventDefault();
@@ -24,4 +25,7 @@ export async function onSubmitAddReply(e){
         alert('Failed to add a reply: ' + JSON.stringify(e));
         return;
     }
+
+    renderReply(reply);
+    e.target.reset();
 }
