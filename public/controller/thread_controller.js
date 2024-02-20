@@ -58,6 +58,9 @@ export async function onSubmitEditReply(e, reply){
         try{
             await deleteReply(docId);
             // update web browser to remove reply
+            // <tr><td><form>
+            const tr = e.target.parentElement.parentElement;
+            tr.remove();
         } catch(e){
             if(DEV) console.log('Failed to delete: ', e);
             alert('Failed to delete a reply: ' + JSON.stringify(e));

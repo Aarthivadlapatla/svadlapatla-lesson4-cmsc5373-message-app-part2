@@ -71,7 +71,7 @@ function createReplyView(reply){
             <button type="submit" class="d-inline-block btn btn-outline-primary" value="edit">Edit</button>
             <button type="submit" class="d-inline-block btn btn-outline-danger" value="delete">Delete</button>
             <button type="submit" class="d-none btn btn-outline-primary" value="update">Update</button>
-            <button type="submit" formvalidate class="d-none btn btn-outline-secondary" value="cancel">Cancel</button>
+            <button type="submit" formnovalidate class="d-none btn btn-outline-secondary" value="cancel">Cancel</button>
         </form>
         `;
         const editForm = tdContent.querySelector('form');

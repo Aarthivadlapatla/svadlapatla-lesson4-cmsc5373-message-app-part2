@@ -9,6 +9,7 @@ import {
     doc,
     where,
     deleteDoc,
+    updateDoc,
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"
 import { app } from "./firebase_core.js";
 import { CollectionName } from "../model/constants.js";
@@ -72,4 +73,10 @@ export async function getReplyList(threadId) {
 export async function deleteReply(docId) {
     const docRef = doc(db, CollectionName.replies, docId);
     await deleteDoc(docRef);
+}
+
+export async function updateReply(docId, update) {
+    // update: {key1: value1, key2: Value2}
+    const docRef = doc(db, CollectionName.replies, docId);
+    await updateDoc(docRef, update);
 }
