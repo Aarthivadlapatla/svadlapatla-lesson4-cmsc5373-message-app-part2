@@ -63,6 +63,9 @@ export async function onSubmitEditReply(e, reply){
     }else if(buttonValue == 'delete'){
         if(!confirm('Confirm to delete the reply?')) return;
         const docId = reply.docId;
+        const progress = document.createElement('div');
+        progress.innerHTML = progressMessage('Deleting ...');
+        e.target.prepend(progress);
         try{
             await deleteReply(docId);
             // update web browser to remove reply
@@ -72,6 +75,7 @@ export async function onSubmitEditReply(e, reply){
         } catch(e){
             if(DEV) console.log('Failed to delete: ', e);
             alert('Failed to delete a reply: ' + JSON.stringify(e));
+            progress.remove();
         }
     }else if(buttonValue == 'update'){
         const docId = reply.docId;

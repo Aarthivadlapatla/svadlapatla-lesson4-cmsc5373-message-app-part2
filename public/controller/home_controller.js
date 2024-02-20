@@ -5,6 +5,7 @@ import { addThread } from "./firestore_controller.js";
 import { DEV } from "../model/constants.js";
 import { progressMessage } from "../view/progress_view.js";
 import { threadPageView } from "../view/thread_page.js";
+import { routePathenames } from "./route_controller.js";
 
 export function onClickCreateButton(e){
     showTextArea();
@@ -61,6 +62,7 @@ export async function onSubmitCreateMessage(e){
 }
 
 export function onClickViewButton(e){
-    console.log(e.target.id);
-    threadPageView(e.target.id);
+    const threadId = e.target.id;
+    history.pushState(null, null, routePathenames.THREAD+'#'+threadId);
+    threadPageView(threadId);
 }

@@ -1,13 +1,16 @@
 import { homePageView } from "../view/home_page.js"
 import { Menu2PageView } from "../view/menu2_page.js"
+import { threadPageView } from "../view/thread_page.js";
 
 export const routePathenames = {
     HOME: '/',
+    THREAD: '/thread',
     MENU2: '/menu2',
 }
 
 export const routes = [
     { path: routePathenames.HOME, page: homePageView },
+    { path: routePathenames.THREAD, page: threadPageView},
     { path: routePathenames.MENU2, page: Menu2PageView }
 ];
 
