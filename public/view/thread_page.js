@@ -1,10 +1,8 @@
 import { root } from "./elements.js";
 import { currentUser } from "../controller/firebase_auth.js";
 import { DEV } from "../model/constants.js";
-import { getThreadById } from "../controller/firestore_controller.js";
-import { onSubmitAddReply } from "../controller/thread_controller.js";
-import { protectedView } from "./protected_view.js"; // Added import statement
-import { getReplyList } from "../controller/firestore_controller.js";
+import { getReplyList, getThreadById } from "../controller/firestore_controller.js";
+import { onSubmitAddReply, onSubmitEditReply } from "../controller/thread_controller.js";
 import { Reply } from "../model/Reply.js"; // Added import statement for Reply class
 
 export async function threadPageView(threadId){
@@ -64,7 +62,23 @@ function createReplyView(reply){
     const tr = document.createElement('tr');
     tr.classList.add('mt-3', 'pt-3');
     const tdContent = document.createElement('td');
-    tdContent.innerHTML = reply.content;
+    if(currentUser.email == reply.email){
+        tdContent.innerHTML = `
+        <form method="post">
+            <textarea class="form-control" placeholder="Leave a reply"
+            required minlength="5" disabled style="height: 100px;"
+            >${reply.content}</textarea>
+            <button type="submit" class="d-inline-block btn btn-outline-primary" value="edit">Edit</button>
+            <button type="submit" class="d-inline-block btn btn-outline-danger" value="delete">Delete</button>
+            <button type="submit" class="d-none btn btn-outline-primary" value="update">Update</button>
+            <button type="submit" formvalidate class="d-none btn btn-outline-secondary" value="cancel">Cancel</button>
+        </form>
+        `;
+        const editForm = tdContent.querySelector('form');
+        editForm.onsubmit = e => onSubmitEditReply(e, reply);
+    }else{
+        tdContent.innerHTML = reply.content;
+    }
 
     const tdEmailTimestamp = document.createElement('td');
     tdEmailTimestamp.innerHTML = `

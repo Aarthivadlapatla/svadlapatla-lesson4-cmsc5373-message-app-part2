@@ -29,3 +29,28 @@ export async function onSubmitAddReply(e){
     renderReply(reply);
     e.target.reset();
 }
+
+export function onSubmitEditReply(e, reply){
+    e.preventDefault();
+    const buttonValue = e.submitter.value;
+    const buttons = e.target.querySelectorAll('button');
+    const editButton = buttons[0];
+    const deleteButton = buttons[1];
+    const updateButton = buttons[2];
+    const cancelButton = buttons[3];
+    const textarea = e.target.querySelector('textarea');
+    if(buttonValue === 'edit'){
+        textarea.disabled = false;
+        editButton.classList.replace('d-inline-block', 'd-none');
+        deleteButton.classList.replace('d-inline-block', 'd-none');
+        updateButton.classList.replace('d-none', 'd-inline-block');
+        cancelButton.classList.replace('d-none', 'd-inline-block');
+    }else if(buttonValue === 'cancel'){
+        textarea.value = reply.content; // restore the original content
+        textarea.disabled = true;
+        editButton.classList.replace('d-none', 'd-inline-block');
+        deleteButton.classList.replace('d-none', 'd-inline-block');
+        updateButton.classList.replace('d-inline-block', 'd-none');
+        cancelButton.classList.replace('d-inline-block', 'd-none');
+    }
+}
