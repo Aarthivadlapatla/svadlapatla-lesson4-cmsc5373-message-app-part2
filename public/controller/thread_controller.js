@@ -1,6 +1,6 @@
 import { Reply } from "../model/Reply.js";
 import { currentUser } from "./firebase_auth.js";
-import { addReply, deleteReply } from "./firestore_controller.js";
+import { addReply, deleteReply, updateReply } from "./firestore_controller.js";
 import { DEV } from "../model/constants.js";
 import { renderReply } from "../view/thread_page.js";
 
@@ -64,7 +64,30 @@ export async function onSubmitEditReply(e, reply){
         } catch(e){
             if(DEV) console.log('Failed to delete: ', e);
             alert('Failed to delete a reply: ' + JSON.stringify(e));
-            
         }
+    }else if(buttonValue == 'update'){
+        const docId = reply.docId;
+        const newContent = textarea.value;
+        const newTimestamp = Date.now();
+        try{
+            await updateReply(docId,{
+                content: newContent,
+                timestamp: newTimestamp,
+            });
+            const tdEmailTimestamp = e.target.parentElement.parentElement
+            .querySelectorAll('td')[1];
+            tdEmailTimestamp.innerHTML = `
+            ${reply.email}<br>${new Date(newTimestamp).toLocaleString()}
+            `;
+        }catch(e){
+            if(DEV) console.log('update error', e);
+            textarea.value = reply.content;
+            alert('Update error: '+ JSON.stringify(e));
+            return;
+        }
+        editButton.classList.replace('d-none', 'd-inline-block');
+        deleteButton.classList.replace('d-none', 'd-inline-block');
+        updateButton.classList.replace('d-inline-block', 'd-none');
+        cancelButton.classList.replace('d-inline-block', 'd-none');
     }
 }
