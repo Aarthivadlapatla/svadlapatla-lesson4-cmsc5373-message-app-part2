@@ -3,6 +3,7 @@ import { currentUser } from "./firebase_auth.js";
 import { addReply, deleteReply, updateReply } from "./firestore_controller.js";
 import { DEV } from "../model/constants.js";
 import { renderReply } from "../view/thread_page.js";
+import { progressMessage } from "../view/progress_view.js";
 
 export async function onSubmitAddReply(e){
     e.preventDefault();
@@ -16,6 +17,10 @@ export async function onSubmitAddReply(e){
         threadId, threadUid, uid, email, timestamp, content
     });
 
+    const progress = document.createElement('div');
+    progress.innerHTML = progressMessage('Adding ...');
+    e.target.prepend(progress);
+
     try{
         const docId = await addReply(reply);
         reply.set_docId(docId);
@@ -23,8 +28,11 @@ export async function onSubmitAddReply(e){
     catch(e){
         if(DEV) console.log('Failed to add a reply', e);
         alert('Failed to add a reply: ' + JSON.stringify(e));
+        progress.remove();
         return;
     }
+
+    progress.remove();
 
     renderReply(reply);
     e.target.reset();
@@ -69,6 +77,9 @@ export async function onSubmitEditReply(e, reply){
         const docId = reply.docId;
         const newContent = textarea.value;
         const newTimestamp = Date.now();
+        const progress = document.createElement('div');
+        progress.innerHTML = progressMessage('Updating ...');
+        e.target.prepend(progress);
         try{
             await updateReply(docId,{
                 content: newContent,
@@ -83,8 +94,12 @@ export async function onSubmitEditReply(e, reply){
             if(DEV) console.log('update error', e);
             textarea.value = reply.content;
             alert('Update error: '+ JSON.stringify(e));
+            progress.remove();
             return;
         }
+        progress.remove();
+        textarea.disabled = true;
+
         editButton.classList.replace('d-none', 'd-inline-block');
         deleteButton.classList.replace('d-none', 'd-inline-block');
         updateButton.classList.replace('d-inline-block', 'd-none');

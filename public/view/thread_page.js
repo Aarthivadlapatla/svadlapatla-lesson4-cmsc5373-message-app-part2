@@ -4,6 +4,7 @@ import { DEV } from "../model/constants.js";
 import { getReplyList, getThreadById } from "../controller/firestore_controller.js";
 import { onSubmitAddReply, onSubmitEditReply } from "../controller/thread_controller.js";
 import { Reply } from "../model/Reply.js"; // Added import statement for Reply class
+import { progressMessage } from "./progress_view.js";
 
 export async function threadPageView(threadId){
     if (!currentUser) {
@@ -17,6 +18,8 @@ export async function threadPageView(threadId){
     divWrapper.innerHTML = await response.text();
     divWrapper.classList.add('m-4', 'p-4');
 
+    root.innerHTML = progressMessage('Loading thread/replies ...');
+
     let thread;
     let replyList;
     try {
@@ -26,6 +29,7 @@ export async function threadPageView(threadId){
     } catch (e) {
         if(DEV) console.log('Failed to load thread/replies',e);
         alert('Failed to load a thread/replies' + JSON.stringify(e));
+        root.innerHTML = progressMessage('Failed to load thread/replies');
         return;
     }
 
