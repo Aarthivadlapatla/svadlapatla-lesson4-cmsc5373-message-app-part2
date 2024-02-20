@@ -8,6 +8,7 @@ import {
     query,
     doc,
     where,
+    deleteDoc,
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"
 import { app } from "./firebase_core.js";
 import { CollectionName } from "../model/constants.js";
@@ -66,4 +67,9 @@ export async function getReplyList(threadId) {
         replies.push(r);
     })
     return replies;
+}
+
+export async function deleteReply(docId) {
+    const docRef = doc(db, CollectionName.replies, docId);
+    await deleteDoc(docRef);
 }
