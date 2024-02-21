@@ -5,6 +5,7 @@ import { getReplyList, getThreadById } from "../controller/firestore_controller.
 import { onSubmitAddReply, onSubmitEditReply } from "../controller/thread_controller.js";
 import { Reply } from "../model/Reply.js"; // Added import statement for Reply class
 import { progressMessage } from "./progress_view.js";
+import { protectedView } from "./protected_view.js";
 
 export async function threadPageView(threadId){
     if (!currentUser) {

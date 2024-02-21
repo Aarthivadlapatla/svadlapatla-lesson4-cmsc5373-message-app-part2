@@ -45,6 +45,7 @@ export async function getThreadList() {
 }
 
 export async function getThreadById(threadId) {
+    if(threadId == null){return null;}
     const docRef = doc(db, CollectionName.threads, threadId);
     const docSnap = await getDoc(docRef);
     if(!docSnap.exists()) {
