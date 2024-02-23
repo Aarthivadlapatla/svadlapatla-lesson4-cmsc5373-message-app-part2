@@ -19,7 +19,6 @@ export async function homePageView() {
         threadList = await getThreadList();
     } catch (e) {
         if(DEV) console.log('getThreadList error', e);
-        //console.log('getThreadList error', e);
         alert('Failed to get threads: ' + JSON.stringify(e));
     }
 

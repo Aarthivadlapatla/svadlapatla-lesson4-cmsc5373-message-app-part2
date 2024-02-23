@@ -6,14 +6,14 @@ export async function signinPageView(){
     {cache: 'no-store'}
     );
 
-    const divWrapper =  document.createElement('div'); // <div></div>
+    const divWrapper =  document.createElement('div'); 
     divWrapper.style.width = "400px";
     divWrapper.classList.add('m-4','p-4');
     divWrapper.innerHTML = await response.text();
 
-    // attach form submit event listener
+    
     const form = divWrapper.getElementsByTagName('form')[0];
     form.onsubmit = signinFirebase;
-    root.innerHTML = ''; // clear the current page rendering
+    root.innerHTML = ''; 
     root.appendChild(divWrapper);
 }

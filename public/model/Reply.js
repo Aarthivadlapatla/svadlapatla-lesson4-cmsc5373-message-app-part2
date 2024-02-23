@@ -1,7 +1,7 @@
 export class Reply{
     constructor(data){
         this.threadId = data.threadId;
-        this.threadUid = data.threadUid; // thread owner's uid
+        this.threadUid = data.threadUid; 
         this.uid = data.uid;
         this.email = data.email;
         this.timestamp = data.timestamp;

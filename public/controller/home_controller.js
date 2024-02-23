@@ -55,7 +55,6 @@ export async function onSubmitCreateMessage(e){
         e.target.reset();
     } catch (e) {
         if (DEV) console.log('addThread error', e);
-        //console.log('addThread error', e);
         alert('Failed to create message: ' + JSON.stringify(e));
     }
     div.remove();

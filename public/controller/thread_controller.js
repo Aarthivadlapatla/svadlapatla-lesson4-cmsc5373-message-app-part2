@@ -11,8 +11,8 @@ export async function onSubmitAddReply(e){
     const uid = currentUser.uid;
     const email = currentUser.email;
     const timestamp = Date.now();
-    const threadId = e.submitter.id; // thread owner's doc id (button id)
-    const threadUid = e.submitter.value; // thread owner's uid (button value)
+    const threadId = e.submitter.id; 
+    const threadUid = e.submitter.value; 
     const reply = new Reply({
         threadId, threadUid, uid, email, timestamp, content
     });
@@ -54,7 +54,7 @@ export async function onSubmitEditReply(e, reply){
         updateButton.classList.replace('d-none', 'd-inline-block');
         cancelButton.classList.replace('d-none', 'd-inline-block');
     }else if(buttonValue === 'cancel'){
-        textarea.value = reply.content; // restore the original content
+        textarea.value = reply.content; 
         textarea.disabled = true;
         editButton.classList.replace('d-none', 'd-inline-block');
         deleteButton.classList.replace('d-none', 'd-inline-block');
@@ -68,8 +68,7 @@ export async function onSubmitEditReply(e, reply){
         e.target.prepend(progress);
         try{
             await deleteReply(docId);
-            // update web browser to remove reply
-            // <tr><td><form>
+            
             const tr = e.target.parentElement.parentElement;
             tr.remove();
         } catch(e){
