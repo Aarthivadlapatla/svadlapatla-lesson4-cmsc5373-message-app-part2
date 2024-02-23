@@ -10,7 +10,7 @@ import {
     where,
     deleteDoc,
     updateDoc,
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
 import { app } from "./firebase_core.js";
 import { CollectionName } from "../model/constants.js";
 import { Thread } from "../model/Thread.js";
